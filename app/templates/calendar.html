@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>カレンダー</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <h1>{{ dates[0].strftime('%Y年%m月') }}</h1>
+    <table>
+        <tr>
+            {% for d in dates %}
+                <td>
+                    {{ d.day }}<br>
+                    {% if d in event_map %}
+                        <div class="event">{{ event_map[d] }}</div>
+                    {% endif %}
+                </td>
+                {% if loop.index % 7 == 0 %}
+                    </tr><tr>
+                {% endif %}
+            {% endfor %}
+        </tr>
+    </table>
+
+    <h2>予定追加</h2>
+    <form method="post" action="/add">
+        <input type="date" name="date" required>
+        <input type="text" name="title" placeholder="予定" required>
+        <button type="submit">追加</button>
+    </form>
+</body>
+</html>
